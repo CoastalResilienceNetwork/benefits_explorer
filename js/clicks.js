@@ -10,6 +10,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				$( function() {
 					$( "#" + t.id + "mainAccord" ).accordion({heightStyle: "fill"}); 
 					$( "#" + t.id + "infoAccord" ).accordion({heightStyle: "fill"});
+					$( '#' + t.id + 'mainAccord > h3' ).addClass("accord-header"); 
+					$( '#' + t.id + 'infoAccord > div' ).addClass("accord-body");
+					$( '#' + t.id + 'infoAccord > h3' ).addClass("accord-header"); 
+					$( '#' + t.id + 'mainAccord > div' ).addClass("accord-body"); 
+					 
 				});
 				// update accordians on window resize
 				var doit;
@@ -21,18 +26,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				});
 				// leave the get help section
 				$('#' + t.id + 'getHelpBtn').on('click',lang.hitch(t,function(c){
-					if ( $('#' + t.id + 'mainAccord').is(":visible") ){
-						$('#' + t.id + 'infoAccord').show();
-						$('#' + t.id + 'mainAccord').hide();
-						$('#' + t.id + 'getHelpBtn').html('Back to Benefits Explorer');
-						t.clicks.updateAccord(t);
-						$('#' + t.id + 'infoAccord .infoDoc').trigger('click');
-					}else{
-						$('#' + t.id + 'infoAccord').hide();
-						$('#' + t.id + 'mainAccord').show();
-						$('#' + t.id + 'getHelpBtn').html('Back to Documentation');
-						t.clicks.updateAccord(t);
-					}					
+					$('#' + t.id + 'infoAccord').hide();
+					$('#' + t.id + 'mainAccord').show();
+					$('#' + t.id + 'getHelpBtnWrap').hide();
+					t.clicks.updateAccord(t);					
 				}));
 				// info icon clicks
 				$('#' + t.id + ' .sty_infoIcon').on('click',lang.hitch(t,function(c){
@@ -45,21 +42,16 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + 'getHelpBtn').html('Back to Benefits Explorer');
 				}));		
 				// Benefit CB Clicks
-				$('#' + t.id + 'basinByBensWrap .sty_cbWrap').on('click',lang.hitch(t,function(c){
-					var ben = "";
-					// if they click a label toggle the checkbox
-					if (c.target.checked == undefined){
-						$(c.currentTarget.children[0].children[0]).prop("checked", !$(c.currentTarget.children[0].children[0]).prop("checked") )	
-						ben = $(c.currentTarget.children[0].children[0]).val()
-					}else{
-						ben = c.target.value;
-					}	
-					if ($(c.currentTarget.children[0].children[0]).prop('checked') === true){
-						$(c.currentTarget).parent().find('.sty_rangeWrap').slideDown();
+				$('#' + t.id + 'basinByBensWrap input').on('click',lang.hitch(t,function(c){
+					var ben = c.target.value;
+					if (c.target.checked == true){
+						$(c.currentTarget).parent().parent().find('.slider-container').slideDown();
+
+						$(c.currentTarget).parent().parent().find('.slider-container').css("display","flex");
 						var values = $('#' + t.id + '-' + ben).slider("option", "values");
 						$('#' + t.id + '-' + ben).slider('values', values); 
 					}else{
-						$(c.currentTarget).parent().find('.sty_rangeWrap').slideUp();
+						$(c.currentTarget).parent().parent().find('.slider-container').slideUp()
 						t[ben] = "";
 						t.clicks.layerDefsUpdate(t);
 						$('#' + t.id + ben + '-range').html("")
@@ -67,17 +59,10 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					}	
 				}));	
 				// Sup data CB Clicks
-				$('#' + t.id + 'supDataWrap .sty_cbStackedWrap').on('click',lang.hitch(t,function(c){
-					var val = "";
-					// if they click a label toggle the checkbox
-					if (c.target.checked == undefined){
-						$(c.currentTarget.children[0].children[0]).prop("checked", !$(c.currentTarget.children[0].children[0]).prop("checked") )	
-						val = $(c.currentTarget.children[0].children[0]).val()
-					}else{
-						val = c.target.value;
-					}	
+				$('#' + t.id + 'supDataWrap input').on('click',lang.hitch(t,function(c){
+					var val = c.target.value;	
 					t.obj.addDatalyr = Number( val.split("-").pop() )
-					$('#' + t.id + 'supDataWrap .sty_cb').each(lang.hitch(t,function(i,v){
+					$('#' + t.id + 'supDataWrap input').each(lang.hitch(t,function(i,v){
 						if ( v.value != val ){
 							$(v).prop('checked', false)
 							var rl = Number( v.value.split("-").pop() )
@@ -87,7 +72,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 							}
 						}
 					}));
-					if ($(c.currentTarget.children[0].children[0]).prop('checked') === true){
+					if (c.target.checked == true){
 						t.obj.visibleLayers.push(t.obj.addDatalyr);
 					}else{
 						var index = t.obj.visibleLayers.indexOf(t.obj.addDatalyr);
@@ -99,26 +84,32 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				}));	
 				// Standing Carbon range slider
-				$('#' + t.id + '-standingc').slider({range:true, min:0, max:6600, values:[0,6600], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				$('#' + t.id + '-standingc').slider({range:true, min:0, max:6600, values:[0,6600], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Forest Loss range slider
-				$('#' + t.id + '-forloss').slider({range:true, min:0, max:20000, values:[0,20000], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				$('#' + t.id + '-forloss').slider({range:true, min:0, max:20000, values:[0,20000], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Reforestation Potential range slider
-				$('#' + t.id + '-refor').slider({range:true, min:0, max:65100, values:[0,65100], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
+				$('#' + t.id + '-refor').slider({range:true, min:0, max:65100, values:[0,65100], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });	
 				// Freshwater Biodiversity Threats range slider
-				$('#' + t.id + '-freshbiot').slider({range:true, min:0, max:10, values:[0,10], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
+				$('#' + t.id + '-freshbiot').slider({range:true, min:0, max:10, values:[0,10], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });	
 				// IUCN Listed Terrestrial Species range slider
-				$('#' + t.id + '-terrsp').slider({range:true, min:0, max:220, values:[0,220], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				$('#' + t.id + '-terrsp').slider({range:true, min:0, max:220, values:[0,220], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Habitat for Pollinators and Impacts on Vitamin A range slider
-				$('#' + t.id + '-vita' ).slider({ range: true, min: 0, max: 85, values: [ 0, 85 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				$('#' + t.id + '-vita' ).slider({ range: true, min: 0, max: 85, values: [ 0, 85 ], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Habitat for Pollinators and Impacts on Crop Yield Economic Output range slider
-				$('#' + t.id + '-agloss' ).slider({ range: true, min: 0, max: 70, values: [ 0, 70 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});
+				$('#' + t.id + '-agloss' ).slider({ range: true, min: 0, max: 70, values: [ 0, 70 ], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Excess Nitrogen range slider
-				$('#' + t.id + '-nitrogen' ).slider({ range: true, min: 0, max: 615, values: [ 0, 615 ], change:function(event,ui){t.clicks.sliderChange(event,ui,t)}});	
+				$('#' + t.id + '-nitrogen' ).slider({ range: true, min: 0, max: 615, values: [ 0, 615 ], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });	
 			},
-			sliderChange: function( event, ui, t ){
+			sliderSlide: function( event, ui, t ){
 				var ben  = event.target.id.split("-").pop()
-				t[ben] = "(" + ben + " >= " + ui.values[0] + " AND " + ben + " <= " + ui.values[1] + ")";	
-				t.clicks.layerDefsUpdate(t);
 				var low = 0;
 				var high = 0;
 				if (ben == 'freshbiot'){
@@ -134,6 +125,11 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 					$('#' + t.id + ben + '-range').html("(" + low + " - " + high);
 				}
 				$('#' + t.id + ben + '-unit').css('display', 'inline-block');
+			},
+			sliderChange: function( event, ui, t ){
+				var ben  = event.target.id.split("-").pop()
+				t[ben] = "(" + ben + " >= " + ui.values[0] + " AND " + ben + " <= " + ui.values[1] + ")";	
+				t.clicks.layerDefsUpdate(t);
 			},	
 			layerDefsUpdate: function(t){
 				if (t.obj.stateSet == "no"){
