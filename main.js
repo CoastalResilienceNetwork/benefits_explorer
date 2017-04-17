@@ -20,7 +20,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/BenefitsExplorer_proto/MapServer";
+			this.url = "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Water_Blueprint/BenefitsExplorer/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why all the tests for undefined). Also called after deactivate when user closes app by clicking X. 
@@ -32,6 +32,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 		},
 		// Called after hibernate at app startup. Calls the render function which builds the plugins elements and functions.   
 		activate: function () {
+			$('.sidebar-nav .nav-title').css("margin-left", "25px");
 			if (this.rendered == false) {
 				this.rendered = true;							
 				this.render();
@@ -102,6 +103,14 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			this.esriapi = new esriapi();
 			this.clicks = new clicks();
 			// ADD HTML TO APP
+			$(this.container).parent().append('<button id="viewBeInfoGraphicIcon" class="button button-default ig-icon"><img src="plugins/benefits_explorer/images/InfographicIcon_v1_23x23.png" alt="show overview graphic"></button>')
+			$(this.container).parent().find("#viewBeInfoGraphicIcon").on('click',function(c){
+				TINY.box.show({
+					animate: false,
+					html: "<img width='720px' src='plugins/benefits_explorer/images/infoGraphic.png'/>",
+					fixed: true
+				});
+			})
 			// Define Content Pane as HTML parent		
 			this.appDiv = new ContentPane({style:'padding:0; color:#000; flex:1; display:flex; flex-direction:column;}'});
 			this.id = this.appDiv.id
@@ -120,6 +129,13 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, lang, obj,
 			// CREATE ESRI OBJECTS AND EVENT LISTENERS	
 			this.esriapi.esriApiFunctions(this);
 			this.rendered = true;	
+			$("#viewBeInfoGraphicIcon").animate({backgroundColor:"rgba(243,243,21,0.3)"}, 1050, function(){
+				$("#viewBeInfoGraphicIcon").animate({backgroundColor:"#ffffff"}, 1050, function(){
+					$("#viewBeInfoGraphicIcon").animate({backgroundColor:"rgba(243,243,21,0.3)"}, 1050, function(){
+						$("#viewBeInfoGraphicIcon").animate({backgroundColor:"#ffffff"}, 1000)
+					});
+				});
+			});
 		}
 	});
 });

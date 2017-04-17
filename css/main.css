@@ -41,3 +41,9 @@
 .graphWrap h4{
 	margin-bottom:10px; font-weight:700;
 }
+.ig-icon{
+	padding:2px !important; height:28px; position:absolute; top:6px; margin-left:4px; z-index:2600;
+}
+.tinner .tclose {
+    color: #2F6384 !important;
+}
