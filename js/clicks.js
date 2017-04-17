@@ -98,6 +98,15 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 				// IUCN Listed Terrestrial Species range slider
 				$('#' + t.id + '-terrsp').slider({range:true, min:0, max:220, values:[0,220], 
 					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
+				// Imperiled Freshwater Fish Species
+				$('#' + t.id + '-imperiledFish').slider({range:true, min:0, max:41, values:[0,41], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
+				// Alliance for Zero Extinction Sites
+				$('#' + t.id + '-azeCount').slider({range:true, min:0, max:29, values:[0,29], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
+				// Important Bird and Biodiversity Areas
+				$('#' + t.id + '-ibaCount').slider({range:true, min:0, max:99, values:[0,99], 
+					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
 				// Habitat for Pollinators and Impacts on Vitamin A range slider
 				$('#' + t.id + '-vita' ).slider({ range: true, min: 0, max: 85, values: [ 0, 85 ], 
 					change:function(event,ui){t.clicks.sliderChange(event,ui,t)}, slide:function(event,ui){t.clicks.sliderSlide(event,ui,t)} });
@@ -133,7 +142,7 @@ function ( Query, QueryTask, declare, FeatureLayer, lang, on, $, ui, esriapi, do
 			},	
 			layerDefsUpdate: function(t){
 				if (t.obj.stateSet == "no"){
-					t.obj.exp = [t.standingc, t.forloss, t.refor, t.freshbiot, t.terrsp, t.vita, t.agloss, t.nitrogen]
+					t.obj.exp = [t.standingc, t.forloss, t.refor, t.freshbiot, t.terrsp, t.imperiledFish, t.azeCount, t.ibaCount, t.vita, t.agloss, t.nitrogen]
 				}
 				var exp = "";
 				var cnt = 0;

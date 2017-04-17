@@ -81,6 +81,42 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 						<div class="sty_rightSlider">220</div>	
 					</div>	
 				</div>
+				<!-- Imperiled freshwater fish Species - count -->
+				<div class="sty_cbRangeWrap sty_redRamp">
+					<label class="form-component">
+						<input type="checkbox" value="imperiledFish"><div class="check"></div>
+						<span class="form-text">Imperiled Freshwater Fish Species - count <span id="imperiledFish-range"></span><span id="imperiledFish-unit" class="sty_hide">)</span></span>
+					</label>
+					<div class="slider-container range-slider sty_flexRow sty_hide">	
+						<div class="sty_leftSlider">0</div>	
+						<div id="-imperiledFish" class="be_rslide slider"></div>
+						<div class="sty_rightSlider">41</div>	
+					</div>	
+				</div>
+				<!-- Alliance for Zero Extinction Sites - count -->
+				<div class="sty_cbRangeWrap sty_greenRamp">
+					<label class="form-component">
+						<input type="checkbox" value="azeCount"><div class="check"></div>
+						<span class="form-text">Alliance for Zero Extinction Sites <span id="azeCount-range"></span><span id="azeCount-unit" class="sty_hide">)</span></span>
+					</label>
+					<div class="slider-container range-slider sty_flexRow sty_hide">	
+						<div class="sty_leftSlider">0</div>	
+						<div id="-azeCount" class="be_rslide slider"></div>
+						<div class="sty_rightSlider">29</div>	
+					</div>	
+				</div>
+				<!-- Important Bird and Biodiversity Areas - count -->
+				<div class="sty_cbRangeWrap sty_greenRamp">
+					<label class="form-component">
+						<input type="checkbox" value="ibaCount"><div class="check"></div>
+						<span class="form-text">Important Bird and Biodiversity Areas <span id="ibaCount-range"></span><span id="ibaCount-unit" class="sty_hide">)</span></span>
+					</label>
+					<div class="slider-container range-slider sty_flexRow sty_hide">	
+						<div class="sty_leftSlider">0</div>	
+						<div id="-ibaCount" class="be_rslide slider"></div>
+						<div class="sty_rightSlider">99</div>	
+					</div>	
+				</div>
 			</div>
 		</section>
 		<section>
@@ -178,6 +214,36 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 				</div>
 				<div class="be_attWrap">
 					<span id="terrsp-amount"></span><span id="terrsp-label"> species</span>
+				</div>
+			</div>
+			<!-- Imperiled Freshwater Fish Species - count -->
+			<h4>Imperiled Freshwater Fish Species</h4>
+			<div class="be_barWrap">
+				<div class="be_barWrapper">
+					<span class="be_bars be_spanBar be_backgroundBar"><span class="be_bars be_emBar be_barRed" id="imperiledFish-bar"></span></span>
+				</div>
+				<div class="be_attWrap">
+					<span id="imperiledFish-amount"></span><span id="imperiledFish-label"> species</span>
+				</div>
+			</div>
+			<!-- Alliance for Zero Extinction Sites - count -->
+			<h4>Alliance for Zero Extinction Sites</h4>
+			<div class="be_barWrap">
+				<div class="be_barWrapper">
+					<span class="be_bars be_spanBar be_backgroundBar"><span class="be_bars be_emBar be_barGreen" id="azeCount-bar"></span></span>
+				</div>
+				<div class="be_attWrap">
+					<span id="azeCount-amount"></span><span id="azeCount-label"> sites</span>
+				</div>
+			</div>
+			<!-- Alliance for Zero Extinction Sites - count -->
+			<h4>Important Bird and Biodiversity Areas</h4>
+			<div class="be_barWrap">
+				<div class="be_barWrapper">
+					<span class="be_bars be_spanBar be_backgroundBar"><span class="be_bars be_emBar be_barGreen" id="ibaCount-bar"></span></span>
+				</div>
+				<div class="be_attWrap">
+					<span id="ibaCount-amount"></span><span id="ibaCount-label"> areas</span>
 				</div>
 			</div>
 			<!-- Percent Reduction in Vitamin A Production in Absence of Pollination Services -->
@@ -282,6 +348,18 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 		<div class="sty_underlineInfoHeader">Imperiled Terrestrial Species</div>
 		<p>
 			Number of imperiled mammals, birds and amphibians whose status could be improved through source water protection activities. (Source data: BirdLife International and NatureServe 2015; IUCN 2016)
+		</p>
+		<div class="sty_underlineInfoHeader">Imperiled Freshwater Fish Species</div>
+		<p>
+			Number of imperiled freshwater fish species in comprehensively assessed regions. (Source data: IUCN 2016)
+		</p>
+		<div class="sty_underlineInfoHeader">Alliance for Zero Extinction Sites</div>
+		<p>
+			Number of Alliance for Zero Extinction (AZE) sites within urban source watersheds. (Source data: AZE 2010)
+		</p>
+		<div class="sty_underlineInfoHeader">Important Bird and Biodiversity Areas</div>
+		<p>
+			Number of Important Bird and Biodiversity Areas (IBAs) within urban source watersheds. (Source data: BirdLife International 2015)
 		</p>
 	</div>	
 	<h3 class="infoHealth">Human Health &#38; Well Being</h3>
