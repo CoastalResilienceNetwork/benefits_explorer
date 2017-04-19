@@ -139,9 +139,7 @@
 	background: linear-gradient(to right, #fff, #e60000) !important; 
 }
 
-#sidebar-help-area{
-	display:none !important;
-}
+
 
 /* fix the accordion height issue in Safari */
 .sidebar-content{
